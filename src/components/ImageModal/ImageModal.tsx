@@ -14,8 +14,23 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 
-export const ImageModal = ({ isOpen, closeModal, image }) => {
-  if (!image) return null;
+interface ImageModalProps {
+  isOpen: boolean;
+  closeModal: () => void;
+  image: {
+    id: string;
+    urls: {
+      regular?: string;
+      small?: string;
+    }
+   alt_description: string;
+  } | null;
+
+}
+
+
+export const ImageModal: React.FC<ImageModalProps> = ({ isOpen, closeModal, image }) => {
+  if (!image || !image.urls?.regular) return null;
 
   return (
     <Modal

@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import css from "./SearchBar.module.css";
 
-const SearchBar = ({ onSubmit }) => {
+interface SearchBarProps {
+  onSubmit: (value: string) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const handelChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
-  const heandelSubmst = (e) => {
+  const heandleSubmst = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!searchQuery.trim()) {
       toast.error("The search field cannot be empty!");
@@ -19,7 +23,7 @@ const SearchBar = ({ onSubmit }) => {
 
   return (
     <header>
-      <form className={css.form} onSubmit={heandelSubmst}>
+      <form className={css.form} onSubmit={heandleSubmst}>
         <Toaster
           position="top-right"
           reverseOrder={false}
@@ -29,7 +33,7 @@ const SearchBar = ({ onSubmit }) => {
         />
         <input
           className={css.input}
-          onChange={handelChange}
+          onChange={handleChange}
           value={searchQuery}
           type="text"
           autoComplete="off"
